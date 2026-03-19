@@ -53,11 +53,14 @@ export function useFormAutoFill() {
         return;
       }
 
+<<<<<<< HEAD
       // Log parsed fields for debugging
       console.log('Parsed fields:', result.fields);
       const scaleFields = result.fields.filter(f => f.type === 5);
       console.log('Scale fields:', scaleFields);
 
+=======
+>>>>>>> 24acaa43e46ccbf1eb64dfdd839fba6b723519ea
       setFields(result.fields);
       setPageCount(result.pageCount);
       setGeneratedResponses([]);

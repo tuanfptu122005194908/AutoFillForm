@@ -74,6 +74,7 @@ function initPercentages(fields: FormField[]): FieldPercentages {
   for (const field of fields) {
     if ([2, 3, 4, 7].includes(field.type) && field.options && field.options.length > 0) {
       p[field.entryId] = randomDistribute(100, field.options.length);
+<<<<<<< HEAD
     } else if ([5, 18].includes(field.type)) {
       // Use extracted options if available, otherwise calculate from scale range
       if (field.options && field.options.length > 0) {
@@ -84,6 +85,13 @@ function initPercentages(fields: FormField[]): FieldPercentages {
         const count = max - min + 1;
         p[field.entryId] = randomDistribute(100, count);
       }
+=======
+    } else if (field.type === 5) {
+      const min = field.scaleMin ?? 1;
+      const max = field.scaleMax ?? 5;
+      const count = max - min + 1;
+      p[field.entryId] = randomDistribute(100, count);
+>>>>>>> 24acaa43e46ccbf1eb64dfdd839fba6b723519ea
     }
   }
   return p;
@@ -155,6 +163,7 @@ export function RandomResponseGenerator({ fields, onResponsesReady }: RandomResp
           if (field.options && field.options.length > 0) {
             resp[field.entryId] = weightedPick(field.options, percentages[field.entryId]);
           }
+<<<<<<< HEAD
         } else if ([5, 18].includes(field.type)) {
           // Scale / Rating - use extracted options if available
           if (field.options && field.options.length > 0) {
@@ -165,6 +174,14 @@ export function RandomResponseGenerator({ fields, onResponsesReady }: RandomResp
             const values = Array.from({ length: max - min + 1 }, (_, i) => String(min + i));
             resp[field.entryId] = weightedPick(values, percentages[field.entryId]);
           }
+=======
+        } else if (field.type === 5) {
+          // Scale
+          const min = field.scaleMin ?? 1;
+          const max = field.scaleMax ?? 5;
+          const values = Array.from({ length: max - min + 1 }, (_, i) => String(min + i));
+          resp[field.entryId] = weightedPick(values, percentages[field.entryId]);
+>>>>>>> 24acaa43e46ccbf1eb64dfdd839fba6b723519ea
         } else {
           // Text fields - pick from user lines or empty
           const lines = (textAnswers[field.entryId] || '').split('\n').map(l => l.trim()).filter(l => l.length > 0);
@@ -187,11 +204,17 @@ export function RandomResponseGenerator({ fields, onResponsesReady }: RandomResp
   };
 
   const choiceFields = fields.filter(f => [2, 3, 4, 7].includes(f.type) && f.options && f.options.length > 0);
+<<<<<<< HEAD
   const scaleFields = fields.filter(f => [5, 18].includes(f.type));
   const textFields = fields.filter(f => [0, 1].includes(f.type));
 
   console.log('RandomResponseGenerator fields:', { choiceFields, scaleFields, textFields });
 
+=======
+  const scaleFields = fields.filter(f => f.type === 5);
+  const textFields = fields.filter(f => [0, 1].includes(f.type));
+
+>>>>>>> 24acaa43e46ccbf1eb64dfdd839fba6b723519ea
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -246,6 +269,7 @@ export function RandomResponseGenerator({ fields, onResponsesReady }: RandomResp
             <Label className="text-sm font-semibold">Tỷ lệ thang đo</Label>
           </div>
           {scaleFields.map(field => {
+<<<<<<< HEAD
             // Use extracted options if available, otherwise generate synthetic ones
             const displayOptions = field.options && field.options.length > 0
               ? field.options
@@ -256,6 +280,17 @@ export function RandomResponseGenerator({ fields, onResponsesReady }: RandomResp
                 field={{ ...field, options: displayOptions }}
                 values={percentages[field.entryId] || []}
                 onChange={(idx, val) => handlePercentageChange(field.entryId, idx, val, displayOptions.length)}
+=======
+            const min = field.scaleMin ?? 1;
+            const max = field.scaleMax ?? 5;
+            const scaleOptions = Array.from({ length: max - min + 1 }, (_, i) => String(min + i));
+            return (
+              <PercentageField
+                key={field.entryId}
+                field={{ ...field, options: scaleOptions }}
+                values={percentages[field.entryId] || []}
+                onChange={(idx, val) => handlePercentageChange(field.entryId, idx, val, scaleOptions.length)}
+>>>>>>> 24acaa43e46ccbf1eb64dfdd839fba6b723519ea
               />
             );
           })}

@@ -62,6 +62,7 @@ export async function submitFormResponse(
         values.forEach((v) => {
           formData.append(entryId, v);
         });
+<<<<<<< HEAD
       } else if ([5, 18].includes(fieldType)) {
         // Scale type (5 and 18) - Google Forms expects the actual value (text like "1", "2", "3", etc)
         const textValue = String(value || '').trim();
@@ -69,6 +70,8 @@ export async function submitFormResponse(
           // Send the value as-is - it should already be the correct scale value
           formData.append(entryId, textValue);
         }
+=======
+>>>>>>> 24acaa43e46ccbf1eb64dfdd839fba6b723519ea
       } else {
         // All other types - send as single value (don't split by comma)
         const finalValue = String(value || '').trim();

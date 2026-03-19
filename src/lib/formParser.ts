@@ -11,7 +11,10 @@ export function getTypeLabel(type: number): string {
     case 7: return 'Lưới';
     case 9: return 'Ngày tháng';
     case 10: return 'Thời gian';
+<<<<<<< HEAD
     case 18: return 'Thang đo (Sao)';
+=======
+>>>>>>> 24acaa43e46ccbf1eb64dfdd839fba6b723519ea
     default: return 'Văn bản';
   }
 }
@@ -136,6 +139,7 @@ export function parseFormHtml(htmlSource: string): ParseResult {
           .map((opt: any) => String(opt[0]).trim());
       }
 
+<<<<<<< HEAD
       // Extract scale range and options for scale questions (type 5 and 18)
       let scaleMin: number | undefined;
       let scaleMax: number | undefined;
@@ -162,6 +166,14 @@ export function parseFormHtml(htmlSource: string): ParseResult {
           scaleMin = 1;
           scaleMax = entryData[1].length || 5;
         }
+=======
+      // Extract scale range for scale questions
+      let scaleMin: number | undefined;
+      let scaleMax: number | undefined;
+      if (type === 5 && entryData[1] && Array.isArray(entryData[1])) {
+        scaleMin = 1;
+        scaleMax = entryData[1].length || 5;
+>>>>>>> 24acaa43e46ccbf1eb64dfdd839fba6b723519ea
       }
 
       fields.push({
