@@ -13,6 +13,12 @@ export async function submitFormResponse(
     
     // Add required Google Form parameters
     formData.append('fvv', '1');
+    formData.append('partialResponse', '[]');
+    formData.append('fbzx', '0');
+    formData.append('submissionTimestamp', '0');
+    formData.append('draftResponse', '[]');
+    formData.append('historyLastSubmittedTime', '0');
+    formData.append('fromPage', '1');
     // For multi-page forms, pageHistory must list all pages: "0,1,2,..."
     const pages = pageCount && pageCount > 1
       ? Array.from({ length: pageCount }, (_, i) => i).join(',')
@@ -68,6 +74,13 @@ export async function submitFormResponse(
         formData.append(entryId, finalValue);
       }
     });
+
+    // Debug: Log the form data being sent
+    console.log('Submitting to:', submitUrl);
+    console.log('Form data:');
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
 
     // Use fetch with no-cors mode to submit
     // Note: We can't read the response with no-cors, but the form will be submitted

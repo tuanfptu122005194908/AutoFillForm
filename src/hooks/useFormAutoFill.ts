@@ -110,10 +110,19 @@ export function useFormAutoFill() {
             response[field.entryId] = `Câu trả lời mẫu ${i + 1}`;
           } else if (field.type === 2 || field.type === 3) {
             response[field.entryId] = field.options && field.options.length > 0 ? field.options[0] : 'Option 1';
+          } else if (field.type === 4) {
+            // Checkbox - select first option
+            response[field.entryId] = field.options && field.options.length > 0 ? field.options[0] : 'Option 1';
           } else if (field.type === 5 || field.type === 18) {
             const min = field.scaleMin ?? 1;
             const max = field.scaleMax ?? 5;
             response[field.entryId] = String(Math.floor(Math.random() * (max - min + 1)) + min);
+          } else if (field.type === 7) {
+            // Grid - select first option
+            response[field.entryId] = field.options && field.options.length > 0 ? field.options[0] : 'Option 1';
+          } else {
+            // Default case for any other types
+            response[field.entryId] = 'Default answer';
           }
         });
         mockResponses.push(response);
@@ -159,6 +168,8 @@ export function useFormAutoFill() {
 
     isRunningRef.current = true;
     const submitUrl = getSubmitUrl(formUrl);
+    console.log('Form URL:', formUrl);
+    console.log('Submit URL:', submitUrl);
     const total = generatedResponses.length;
 
     setStatus({ current: 0, total, status: 'submitting', message: 'Đang gửi...' });
